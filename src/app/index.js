@@ -6,15 +6,17 @@ let canvas,			// Canvas DOM element
 	ctx,
     keys,
 	env,
-    player;
+    player,
+    game$;
 
 const restart = () => {
 
     // Creamos env
     env = new Environment();
 
-    // TODO!!
+    // Creamos player
     player = new Player(env, 0, 0);
+    game$.subscribe(player.update);
 
     isAlive = true,
 
@@ -33,7 +35,8 @@ const update = (e) => {
 	keys.selected(e);
 
     // Acá debería ejecutar las funciones subscritas a game.
-    if (player.update(keys)) {
+    // Funciones subscritas se activan con algún evento en game$.
+    if (game$.next(keys)) {
 		player.score -= 10;
 	}
 
@@ -61,6 +64,9 @@ $(function(){
 	canvas = document.getElementById("canvas");
 	ctx = canvas.getContext("2d");
     keys = new Keys();
+
+    // Definimos observable.
+    game$ = new Rx.Subject();
 
     // Cargamos los recursos (img, jugador, etc).
     resources.load().then(() => {

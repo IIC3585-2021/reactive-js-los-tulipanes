@@ -19,7 +19,7 @@ const Player = function(env, x, y) {
     this.lifes = 3;
     this.bombs = 10;
 
-    // Debe estar subscrito a game.
+    // Función subscrita a $game.
     this.putBomb = (keys) => {
 
 
@@ -28,8 +28,8 @@ const Player = function(env, x, y) {
         }
     };
 
-    // Debe estar subscrito a game.
-    this.update = function(keys) {
+    // Función subscrita a $game.
+    this.update = (keys) => {
 
 		// Posición previa.
 		let prevX = this.x,
@@ -37,7 +37,6 @@ const Player = function(env, x, y) {
 
 		// Me muevo dependiendo de la flecha apretada
 		if (keys.up) {
-            //console.log(this.env.legalMove(this.getPosI(), this.getPosJ() - 1))
             if(this.direction == FACING_TO_UP && this.y > 0 && this.env.legalMove(this.getPosI(), this.getPosJ() - 1)){
                 this.y -= this.speed;
             }else{
@@ -45,7 +44,7 @@ const Player = function(env, x, y) {
             }
 		} else if (keys.down) {
             if(this.direction == FACING_TO_DOWN && this.y+this.speed < this.env.j*this.env.height && this.env.legalMove(this.getPosI(), this.getPosJ() + 1)){
-      		    this.y += this.speed;
+                this.y += this.speed;
             }else{
                 this.direction = FACING_TO_DOWN;
             }
