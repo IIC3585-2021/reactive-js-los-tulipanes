@@ -14,11 +14,11 @@ const restart = () => {
     env = new Environment();
 
     // TODO!!
-    // player = new Player(env, 0, 0);
+    player = new Player(env, 0, 0);
 
     isAlive = true,
 
-    animate();
+    draw();
 }
 
 // Browser window resize
@@ -27,19 +27,18 @@ const resizeCanvas = () => {
 	canvas.height = env.height * env.j;
 }
 
-// Keyboard key down
-const onKeydown = (e) => {
-	// if (player) {
-	// 	keys.onKeyDown(e);
-	// };
-	keys.onKeyDown(e);
+// Función se ejecuta cada vez que hay un evento.
+const update = (e) => {
+	
+	keys.selected(e);
 
-	animate();
+    // Acá debería ejecutar las funciones subscritas a game.
+    if (player.update(keys)) {
+		player.score -= 10;
+	}
+
+	draw();
 };
-
-const update = () => {
-    // Cada vez que ocurre un evento.
-}
 
 const draw = () => {
 
@@ -56,17 +55,12 @@ const draw = () => {
     }
 }
 
-const animate = () => {
-    // update(); implementar junto con el agente.
-	draw();
-}
-
 $(function(){
 
     // Obtengo canvas del DOM y defino ctx y keys.
 	canvas = document.getElementById("canvas");
 	ctx = canvas.getContext("2d");
-    // keys = new Keys();
+    keys = new Keys();
 
     // Cargamos los recursos (img, jugador, etc).
     resources.load().then(() => {
@@ -74,9 +68,9 @@ $(function(){
         restart();
         resizeCanvas();
 
-        // Start listening for events
-        // window.addEventListener("keydown", onKeydown, false);
+        // Por cada evento se ejecuta update
+        window.addEventListener("keydown", update, false);
 
-		animate();
+		draw();
     })
 });

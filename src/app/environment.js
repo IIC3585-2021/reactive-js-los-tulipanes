@@ -21,6 +21,20 @@ const Environment = function(i=15, j=7, width=64, height=64) {
         // Generar power ups aletoreamente
     };
 
+    /*
+    Retorna true si (x, y) corresponde a posición de un bloque
+    false en otro caso. 
+    */
+    this.legalMove = (x, y) => {
+        let movement = true;
+        this.block.forEach((element) => {
+            if (element[0] == x && element[1] == y) {
+                movement = false;
+            }
+        });
+        return movement;
+    }
+
     // Método para dibujar el tablero.
     this.draw = (ctx) => {
 
