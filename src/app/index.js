@@ -7,7 +7,8 @@ let canvas,			// Canvas DOM element
     keys,
 	env,
     playerOne,
-    game$;
+    game$,
+    bombHandler$;
 
 const restart = () => {
 
@@ -24,6 +25,12 @@ const restart = () => {
     */
     game$.subscribe(playerOne.update);
     game$.subscribe(playerTwo.update);
+    game$.subscribe(playerOne.putBomb);
+    game$.subscribe(playerTwo.putBomb);
+    bombHandler$.subscribe(playerOne.updateStats);
+    bombHandler$.subscribe(playerTwo.updateStats);
+    bombHandler$.subscribe(playerOne.boom);
+    bombHandler$.subscribe(playerTwo.boom);
 
     isAlive = true,
 
@@ -43,9 +50,7 @@ const update = (e) => {
 
     // Acá debería ejecutar las funciones subscritas a game.
     // Funciones subscritas se activan con algún evento en game$.
-    if (game$.next(keys)) {
-		playerOne.score -= 10;
-	}
+    game$.next(keys);
 
 	draw();
 };
@@ -72,8 +77,9 @@ $(function(){
 	ctx = canvas.getContext("2d");
     keys = new Keys();
 
-    // Definimos observable.
+    // Definimos observables.
     game$ = new Rx.Subject();
+    bombHandler$ = new Rx.Subject();
 
     // Cargamos los recursos (img, jugador, etc).
     resources.load().then(() => {

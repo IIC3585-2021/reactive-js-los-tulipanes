@@ -26,10 +26,7 @@ let resources = {
                 this.loadImage('facing_to_right', 'assets/img/player_facing_to_right.png'),
                 this.loadImage('wall', 'assets/img/wall.png'),
                 this.loadImage('floor', 'assets/img/floor.png'),
-                this.loadImage('hole', 'assets/img/hole.png'),
-                this.loadImage('wumpus', 'assets/img/wumpus.png'),
-                this.loadImage('gold', 'assets/img/gold.png'),
-                this.loadImage('floor_gold', 'assets/img/floor_gold.png'),
+                this.loadImage('bomb', 'assets/img/bomb.png'),
             ];
             
             // Promesa se resuelve cuando se cargan todas las magenes

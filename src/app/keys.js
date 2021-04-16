@@ -37,11 +37,11 @@ const Keys = function(up=false, left=false, right=false, down=false, space=false
 				this.down = true;
 				this.secondInput = true;
 				break;
-			case 32: // Space (Bomba primer jugador)
+			case 13: // Bomb (Bomba primer jugador)
 				this.space = true;
 				break;
-			case 13: // enter (Bomba segundo jugador)
-				this.enter = true;
+			case 32: // Bomb (Bomba segundo jugador)
+				this.space = true;
 				this.secondInput = true;
 				break;
 		};
