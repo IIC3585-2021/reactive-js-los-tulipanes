@@ -1,16 +1,94 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <meta charset="utf-8" />
 
-<head>
-  <meta charset="UTF-8" />
-  <title>Bomberman</title>
-</head>
+    <title>Bomberman Game</title>
 
-<body>
-  <h1>
-    Welcome!
-  </h1>
-  <img src="./assets/bomberman.png" width="50%" />
-</body>
+    <!-- Hojas de Estilo, se usa Bootstrap por simplicidad -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+    />
+    <link rel="stylesheet" href="assets/styles.css" />
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+      <h1 class="navbar-brand">Bomberman Game</h1>
+    </nav>
 
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-lg-9">
+          <div class="card card-game">
+            <div class="card-content">
+              <canvas
+                id="canvas"
+                width="480"
+                height="480"
+              ></canvas>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3">
+          <div class="card card-body">
+            <div class="tab-content">
+              <h4>Jugador 1</h4>
+              <div class="tab-pane fade show active mt-4">
+                <p>
+                  <img src="assets/img/score-icon.png" width="16px" />
+                  <span>Puntos</span>:
+                  <span id="score1">0</span>
+                </p>
+                <p>
+                  <img src="assets/img/heart.png" width="16px" />
+                  <span>Vidas</span>:
+                  <span id="lifes1">3</span>
+                </p>
+                <p>
+                  <img src="assets/img/bomb-icon.png" width="16px" />
+                  <span>Bombas Restantes</span>:
+                  <span id="bombs1">10</span>
+                </p>
+              </div>
+            </div>
+            <br>
+            <div class="tab-content">
+              <h4>Jugador 2</h4>
+              <div class="tab-pane fade show active mt-4">
+                <p>
+                  <img src="assets/img/score-icon.png" width="16px" />
+                  <span>Puntos</span>:
+                  <span id="score2">0</span>
+                </p>
+                <p>
+                  <img src="assets/img/heart.png" width="16px" />
+                  <span>Vidas</span>:
+                  <span id="lifes2">3</span>
+                </p>
+                <p>
+                  <img src="assets/img/bomb-icon.png" width="16px" />
+                  <span>Bombas Restantes</span>:
+                  <span id="bombs2">10</span>
+                </p>
+              </div>
+            </div>
+          </div>
+          <!-- sidebar -->
+        </div>
+      </div>
+    </div>
+
+    <!-- jQuery y RxJS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/5.5.6/Rx.js"></script>
+
+    <!-- Application -->
+    <script src="app/resources.js"></script>
+    <script src="app/environment.js"></script>
+    <script src="app/keys.js"></script>
+    <script src="app/player.js"></script>
+    <script src="app/index.js"></script>
+  </body>
 </html>
