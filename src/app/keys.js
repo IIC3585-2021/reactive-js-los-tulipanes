@@ -1,31 +1,48 @@
 /**************************************************
 ** GAME KEYBOARD CLASS
 **************************************************/
-const Keys = function(up=false, left=false, right=false, down=false, space=false, enter=false) {
+const Keys = function(up=false, left=false, right=false, down=false, space=false, enter=false, secondInput=false) {
 
-	var selected = function(e) {
-		var that = this,
-			c = e.keyCode;
+	const selected = function(e) {
+
+		let c = e.keyCode;
 
 		switch (c) {
 			// Controls
 			case 37: // Left
-				that.left = true;
+				this.left = true;
+				break;
+			case 65: // Left Second Player
+				this.left = true;
+				this.secondInput = true;
 				break;
 			case 38: // Up
-				that.up = true;
+				this.up = true;
+				break;
+			case 87: // Up Second Player
+				this.up = true;
+				this.secondInput = true;
 				break;
 			case 39: // Right
-				that.right = true; // Will take priority over the left key
+				this.right = true;
+				break;
+			case 68: // Right Second Player
+				this.right = true;
+				this.secondInput = true;
 				break;
 			case 40: // Down
-				that.down = true;
+				this.down = true;
 				break;
-			case 32: // Space
-				that.space = true;
+			case 83: // Down Second Player
+				this.down = true;
+				this.secondInput = true;
 				break;
-			case 13: // enter
-				that.enter = true;
+			case 32: // Space (Bomba primer jugador)
+				this.space = true;
+				break;
+			case 13: // enter (Bomba segundo jugador)
+				this.enter = true;
+				this.secondInput = true;
 				break;
 		};
 	};
@@ -37,6 +54,7 @@ const Keys = function(up=false, left=false, right=false, down=false, space=false
 		down: down,
 		space: space,
 		enter: enter,
+		secondInput: secondInput,
 		selected: selected,
 	};
 };

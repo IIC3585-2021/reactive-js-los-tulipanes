@@ -6,7 +6,7 @@ let canvas,			// Canvas DOM element
 	ctx,
     keys,
 	env,
-    player,
+    playerOne,
     game$;
 
 const restart = () => {
@@ -15,8 +15,15 @@ const restart = () => {
     env = new Environment();
 
     // Creamos player
-    player = new Player(env, 0, 0);
-    game$.subscribe(player.update);
+    playerOne = new Player(env, 0, 0);
+    playerTwo = new Player(env, 14*64, 6*64, true);
+
+    /*
+     Subscribimos funciones: me encantaría dejarlas como sólo 
+     una subscripción del tipo Player.update, pero no funciona.
+    */
+    game$.subscribe(playerOne.update);
+    game$.subscribe(playerTwo.update);
 
     isAlive = true,
 
@@ -37,7 +44,7 @@ const update = (e) => {
     // Acá debería ejecutar las funciones subscritas a game.
     // Funciones subscritas se activan con algún evento en game$.
     if (game$.next(keys)) {
-		player.score -= 10;
+		playerOne.score -= 10;
 	}
 
 	draw();
@@ -49,13 +56,13 @@ const draw = () => {
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     // Dibujo el env.
-    if (env) {
-	    env.draw(ctx);
-    }
-    // Dibujo al jugador
-    if (player) {
-	    player.draw(ctx);
-    }
+	env.draw(ctx);
+
+    // Dibujo al jugador 1
+	playerOne.draw(ctx);
+
+    // Dibujo al jugador 2
+    playerTwo.draw(ctx);
 }
 
 $(function(){
