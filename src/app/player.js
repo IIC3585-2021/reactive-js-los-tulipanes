@@ -71,12 +71,12 @@ export const Player = function (env, x, y, secondPlayer = false) {
   this.explode = () => {
     if (exp.collides(this.getPosI(this.x), this.getPosJ(this.y))) {
       this.lives--;
+      this.updateStats();
       if (this.lives <= 0) {
         death$.next();
       }
       this.x = this.initialX;
       this.y = this.initialY;
-      this.updateStats();
       return true;
     }
     return false;
