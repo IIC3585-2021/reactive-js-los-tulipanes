@@ -18,6 +18,7 @@ let canvas, // Canvas DOM element
 
 export var bombHandler$;
 export var death$;
+export var explosionHandler$;
 
 const restart = () => {
   // Creamos player
@@ -40,10 +41,18 @@ const restart = () => {
   bombHandler$.subscribe(playerOne.boom);
   bombHandler$.subscribe(playerTwo.boom);
 
+  explosionHandler$.subscribe(explode);
+
   death$.subscribe(gameOver);
 
   //isAlive = true,
 
+  draw();
+};
+
+const explode = () => {
+  playerOne.explode();
+  playerTwo.explode();
   draw();
 };
 
@@ -98,6 +107,7 @@ export const run = () => {
   game$ = new Rx.Subject();
   bombHandler$ = new Rx.Subject();
   death$ = new Rx.Subject();
+  explosionHandler$ = new Rx.Subject();
 
   // Cargamos los recursos (img, jugador, etc).
   resources.load().then(() => {

@@ -18,7 +18,6 @@ const Explosion = function (positions) {
   };
 
   this.collides = (x, y) => {
-    console.log('Checking', x, y);
     return (
       this.positions.filter((p) => {
         return p[0] === x && p[1] === y;
@@ -32,8 +31,7 @@ export const Explosions = function () {
 
   this.newExplosion = (x, y) => {
     const positions = env.neighbors(x, y);
-    // console.log(x, y)
-    // console.log(positions)
+
     const explosion = new Explosion(positions);
     this.explosions.push(explosion);
 

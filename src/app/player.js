@@ -4,7 +4,7 @@
  */
 
 import { resources } from './resources';
-import { bombHandler$, draw, death$ } from './app';
+import { bombHandler$, draw, death$, explosionHandler$ } from './app';
 import { exp } from './explosion';
 import $ from 'jquery';
 
@@ -55,7 +55,7 @@ export const Player = function (env, x, y, secondPlayer = false) {
           const j = this.getPosJ(bombPos[1]);
           exp.newExplosion(i, j);
           this.lastBomb.splice(index, 1);
-          this.explode();
+          explosionHandler$.next();
         }
 
         // calcular espacios afectados
@@ -69,9 +69,7 @@ export const Player = function (env, x, y, secondPlayer = false) {
   };
 
   this.explode = () => {
-    console.log('💣');
     if (exp.collides(this.getPosI(this.x), this.getPosJ(this.y))) {
-      console.log('💀');
       this.lives--;
       if (this.lives <= 0) {
         death$.next();
@@ -146,7 +144,6 @@ export const Player = function (env, x, y, secondPlayer = false) {
 
   // Función subscrita a bombHandler$.
   this.updateStats = () => {
-    console.log(`${this.lives} ❤️`);
     $(`#score${this.secondPlayer ? 2 : 1}`).text(this.score);
     $(`#lives${this.secondPlayer ? 2 : 1}`).text(this.lives);
     $(`#bombs${this.secondPlayer ? 2 : 1}`).text(this.bombs);
