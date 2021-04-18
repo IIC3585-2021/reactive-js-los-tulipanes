@@ -4,7 +4,7 @@
  */
 
 import { resources } from './resources';
-import { bombHandler$, draw } from './app';
+import { bombHandler$, draw, death$ } from './app';
 import { exp } from './explosion';
 import $ from 'jquery';
 
@@ -73,6 +73,9 @@ export const Player = function (env, x, y, secondPlayer = false) {
     if (exp.collides(this.getPosI(this.x), this.getPosJ(this.y))) {
       console.log('💀');
       this.lives--;
+      if (this.lives <= 0) {
+        death$.next();
+      }
       this.x = this.initialX;
       this.y = this.initialY;
       this.updateStats();

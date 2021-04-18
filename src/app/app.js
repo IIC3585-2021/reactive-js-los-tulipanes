@@ -17,7 +17,7 @@ let canvas, // Canvas DOM element
   game$;
 
 export var bombHandler$;
-export var explosionHandler$;
+export var death$;
 
 const restart = () => {
   // Creamos player
@@ -40,9 +40,18 @@ const restart = () => {
   bombHandler$.subscribe(playerOne.boom);
   bombHandler$.subscribe(playerTwo.boom);
 
+  death$.subscribe(gameOver);
+
   //isAlive = true,
 
   draw();
+};
+
+const gameOver = () => {
+  const winningPlayer = playerOne.lives > 0 ? 'player one' : 'player two';
+  if (confirm(`Juego ha terminado, ganó ${winningPlayer}\n Jugar denuevo?`)) {
+    window.location.reload();
+  }
 };
 
 // Browser window resize
@@ -88,7 +97,7 @@ export const run = () => {
   // Definimos observables.
   game$ = new Rx.Subject();
   bombHandler$ = new Rx.Subject();
-  explosionHandler$ = new Rx.Subject();
+  death$ = new Rx.Subject();
 
   // Cargamos los recursos (img, jugador, etc).
   resources.load().then(() => {
