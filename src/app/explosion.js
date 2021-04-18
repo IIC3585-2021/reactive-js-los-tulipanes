@@ -18,9 +18,10 @@ const Explosion = function (positions) {
   };
 
   this.collides = (x, y) => {
+    console.log('Checking', x, y);
     return (
       this.positions.filter((p) => {
-        p.x === x && p.y === y;
+        return p[0] === x && p[1] === y;
       }).length > 0
     );
   };
@@ -44,10 +45,13 @@ export const Explosions = function () {
   };
 
   this.draw = (ctx) => {
-    //console.log(this.explosions)
     this.explosions.forEach((e) => {
       e.draw(ctx);
     });
+  };
+
+  this.collides = (x, y) => {
+    return this.explosions.some((e) => e.collides(x, y));
   };
 };
 

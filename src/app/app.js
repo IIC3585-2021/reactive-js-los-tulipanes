@@ -32,11 +32,13 @@ const restart = () => {
   game$.subscribe(playerTwo.update);
   game$.subscribe(playerOne.putBomb);
   game$.subscribe(playerTwo.putBomb);
+  game$.subscribe(playerOne.explode);
+  game$.subscribe(playerTwo.explode);
+
   bombHandler$.subscribe(playerOne.updateStats);
   bombHandler$.subscribe(playerTwo.updateStats);
   bombHandler$.subscribe(playerOne.boom);
   bombHandler$.subscribe(playerTwo.boom);
-  explosionHandler$.subscribe(Explosion.collide);
 
   //isAlive = true,
 
@@ -56,7 +58,6 @@ const update = (e) => {
   // Acá debería ejecutar las funciones subscritas a game.
   // Funciones subscritas se activan con algún evento en game$.
   game$.next(keys);
-  explosionHandler$.next();
 
   draw();
 };

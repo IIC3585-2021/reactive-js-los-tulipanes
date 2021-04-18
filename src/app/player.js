@@ -14,6 +14,8 @@ const FACING_TO_UP = 1,
   FACING_TO_RIGHT = 4;
 
 export const Player = function (env, x, y, secondPlayer = false) {
+  this.initialX = x;
+  this.initialY = y;
   this.x = x;
   this.y = y;
   this.env = env;
@@ -22,7 +24,7 @@ export const Player = function (env, x, y, secondPlayer = false) {
   this.secondPlayer = secondPlayer;
   this.lastBomb = []; // posición de la última bomba dejada.
   this.score = 0;
-  this.lifes = 3;
+  this.lives = 3;
   this.bombs = 10;
 
   // Función subscrita a $game.
@@ -53,6 +55,7 @@ export const Player = function (env, x, y, secondPlayer = false) {
           const j = this.getPosJ(bombPos[1]);
           exp.newExplosion(i, j);
           this.lastBomb.splice(index, 1);
+          this.explode();
         }
 
         // calcular espacios afectados
@@ -63,6 +66,19 @@ export const Player = function (env, x, y, secondPlayer = false) {
         draw();
       }, 4 * 1000);
     }
+  };
+
+  this.explode = () => {
+    console.log('💣');
+    if (exp.collides(this.getPosI(this.x), this.getPosJ(this.y))) {
+      console.log('💀');
+      this.lives--;
+      this.x = this.initialX;
+      this.y = this.initialY;
+      this.updateStats();
+      return true;
+    }
+    return false;
   };
 
   // Función subscrita a $game.
@@ -127,8 +143,9 @@ export const Player = function (env, x, y, secondPlayer = false) {
 
   // Función subscrita a bombHandler$.
   this.updateStats = () => {
+    console.log(`${this.lives} ❤️`);
     $(`#score${this.secondPlayer ? 2 : 1}`).text(this.score);
-    $(`#lifes${this.secondPlayer ? 2 : 1}`).text(this.lifes);
+    $(`#lives${this.secondPlayer ? 2 : 1}`).text(this.lives);
     $(`#bombs${this.secondPlayer ? 2 : 1}`).text(this.bombs);
   };
 

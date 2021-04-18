@@ -37,7 +37,6 @@ const Environment = function (i = 15, j = 7, width = 64, height = 64) {
   this.neighbors = (x, y) => {
     const allNeighbors = this.unsafeNeighbors(x, y);
     const safeNeighbors = allNeighbors.filter((p) => this.isSafe(...p));
-    console.log(allNeighbors, safeNeighbors);
     return safeNeighbors;
   };
 
