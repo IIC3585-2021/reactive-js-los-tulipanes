@@ -5,6 +5,7 @@ import img_rightImg from "../assets/img/player_facing_to_right.png"
 import wallImg from "../assets/img/wall.png"
 import floorImg from "../assets/img/floor.png"
 import bombImg from "../assets/img/bomb.png"
+import explosionImg from "../assets/img/explosion.png"
 
 export const resources = {
 
@@ -35,6 +36,7 @@ export const resources = {
                 this.loadImage('wall', wallImg),
                 this.loadImage('floor', floorImg),
                 this.loadImage('bomb', bombImg),
+                this.loadImage('explosion', explosionImg)
             ];
 
             // Promesa se resuelve cuando se cargan todas las magenes

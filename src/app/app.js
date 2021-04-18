@@ -5,24 +5,21 @@ import $ from 'jquery';
 import * as Rx from 'rxjs'
 import { Keys } from './keys'
 import { resources } from './resources'
-import { Environment } from './environment'
+import { env } from './environment'
 import { Player } from './player'
+import { exp } from './explosion'
 
 let canvas,			// Canvas DOM element
     ctx,
     keys,
-    env,
     playerOne,
     playerTwo,
     game$;
 
 export var bombHandler$;
-
+export var explosionHandler$;
 
 const restart = () => {
-
-    // Creamos env
-    env = new Environment();
 
     // Creamos player
     playerOne = new Player(env, 0, 0);
@@ -77,6 +74,9 @@ export const draw = () => {
 
     // Dibujo al jugador 2
     playerTwo.draw(ctx);
+
+    //explosiones
+    exp.draw(ctx)
 }
 
 export const run = () => {
@@ -89,6 +89,7 @@ export const run = () => {
     // Definimos observables.
     game$ = new Rx.Subject();
     bombHandler$ = new Rx.Subject();
+    explosionHandler$ = new Rx.Subject();
 
     // Cargamos los recursos (img, jugador, etc).
     resources.load().then(() => {

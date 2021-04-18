@@ -5,9 +5,9 @@
 
 import { resources } from './resources'
 
-export const Environment = function (i = 15, j = 7, width = 64, height = 64) {
-    this.i = i; //filas
-    this.j = j; // columnas
+const Environment = function (i = 15, j = 7, width = 64, height = 64) {
+    this.i = i; //columnas
+    this.j = j; // filas
     this.width = width; // ancho bloque
     this.height = height; // alto bloque
     this.block = [];
@@ -17,6 +17,23 @@ export const Environment = function (i = 15, j = 7, width = 64, height = 64) {
         }
     }
     // this.boxes = [[10,10]];
+
+    this.unsafeNeighbors = (x, y) => {
+        return [[x, y + 1], [x, y - 1], [x - 1, y], [x + 1, y], [x, y]]
+    }
+
+    this.isSafe = (x, y) => {
+        if (x < 0 || x > this.i) return false;
+        if (y < 0 || y > this.j) return false;
+        return true;
+    }
+
+    this.neighbors = (x, y) => {
+        const allNeighbors = this.unsafeNeighbors(x, y);
+        const safeNeighbors = allNeighbors.filter((p) => this.isSafe(...p));
+        console.log(allNeighbors, safeNeighbors)
+        return safeNeighbors
+    }
 
     this.construct = () => {
 
@@ -51,3 +68,5 @@ export const Environment = function (i = 15, j = 7, width = 64, height = 64) {
         });
     };
 }
+
+export const env = new Environment();

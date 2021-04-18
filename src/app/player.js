@@ -5,6 +5,7 @@
 
 import { resources } from './resources'
 import { bombHandler$, draw } from './app'
+import { exp } from './explosion'
 import $ from 'jquery'
 
 const FACING_TO_UP = 1,
@@ -49,9 +50,19 @@ export const Player = function (env, x, y, secondPlayer = false) {
             setTimeout(() => {
                 const index = this.lastBomb.indexOf(bomb);
                 if (index > -1) {
+                    const bombPos = this.lastBomb[index]
+                    const i = this.getPosI(bombPos[0])
+                    const j = this.getPosJ(bombPos[1])
+                    exp.newExplosion(i, j)
                     this.lastBomb.splice(index, 1);
                 }
-                draw();
+
+                // calcular espacios afectados
+                // calcular colisiones
+                // hacer observables
+                // dibujar
+
+                draw()
             }, 4 * 1000);
         }
     };
@@ -67,25 +78,25 @@ export const Player = function (env, x, y, secondPlayer = false) {
         if (!!this.secondPlayer === !!keys.secondInput) {
             // Me muevo dependiendo de la flecha apretada
             if (keys.up) {
-                if (this.direction == FACING_TO_UP && this.y > 0 && this.env.legalMove(this.getPosI(), this.getPosJ() - 1)) {
+                if (this.direction == FACING_TO_UP && this.y > 0 && this.env.legalMove(this.getPosI(this.x), this.getPosJ(this.y) - 1)) {
                     this.y -= this.speed;
                 } else {
                     this.direction = FACING_TO_UP;
                 }
             } else if (keys.down) {
-                if (this.direction == FACING_TO_DOWN && this.y + this.speed < this.env.j * this.env.height && this.env.legalMove(this.getPosI(), this.getPosJ() + 1)) {
+                if (this.direction == FACING_TO_DOWN && this.y + this.speed < this.env.j * this.env.height && this.env.legalMove(this.getPosI(this.x), this.getPosJ(this.y) + 1)) {
                     this.y += this.speed;
                 } else {
                     this.direction = FACING_TO_DOWN;
                 }
             } else if (keys.left) {
-                if (this.direction == FACING_TO_LEFT && this.x > 0 && this.env.legalMove(this.getPosI() - 1, this.getPosJ())) {
+                if (this.direction == FACING_TO_LEFT && this.x > 0 && this.env.legalMove(this.getPosI(this.x) - 1, this.getPosJ(this.y))) {
                     this.x -= this.speed;
                 } else {
                     this.direction = FACING_TO_LEFT;
                 }
             } else if (keys.right) {
-                if (this.direction == FACING_TO_RIGHT && this.x + this.speed < this.env.i * this.env.width && this.env.legalMove(this.getPosI() + 1, this.getPosJ())) {
+                if (this.direction == FACING_TO_RIGHT && this.x + this.speed < this.env.i * this.env.width && this.env.legalMove(this.getPosI(this.x) + 1, this.getPosJ(this.y))) {
                     this.x += this.speed;
                 } else {
                     this.direction = FACING_TO_RIGHT;
@@ -108,12 +119,12 @@ export const Player = function (env, x, y, secondPlayer = false) {
         $(`#bombs${this.secondPlayer ? 2 : 1}`).text(this.bombs);
     };
 
-    this.getPosI = () => {
-        return Math.floor(this.x / this.env.width);
+    this.getPosI = (x) => {
+        return Math.floor(x / this.env.width);
     };
 
-    this.getPosJ = () => {
-        return Math.floor(this.y / this.env.height);
+    this.getPosJ = (y) => {
+        return Math.floor(y / this.env.height);
     };
 
     this.draw = (ctx) => {
