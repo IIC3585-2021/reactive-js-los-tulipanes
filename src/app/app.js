@@ -45,8 +45,6 @@ const restart = () => {
 
   death$.subscribe(gameOver);
 
-  //isAlive = true,
-
   draw();
 };
 

@@ -23,6 +23,7 @@ export const Player = function (env, x, y, secondPlayer = false) {
   this.direction = secondPlayer ? FACING_TO_UP : FACING_TO_DOWN;
   this.secondPlayer = secondPlayer;
   this.lastBomb = []; // posición de la última bomba dejada.
+  this.bombs = 30;
   this.lives = 3;
 
   // Función subscrita a $game.
@@ -31,6 +32,7 @@ export const Player = function (env, x, y, secondPlayer = false) {
     if (!!this.secondPlayer === !!keys.secondInput) {
       if (keys.space) {
         this.lastBomb.push([this.x, this.y]);
+        this.bombs--;
         // ejecutamos funciones subscritas a bomb handler.
         bombHandler$.next();
       }
@@ -54,12 +56,6 @@ export const Player = function (env, x, y, secondPlayer = false) {
           this.lastBomb.splice(index, 1);
           explosionHandler$.next();
         }
-
-        // calcular espacios afectados
-        // calcular colisiones
-        // hacer observables
-        // dibujar
-
         draw();
       }, 4 * 1000);
     }
@@ -142,6 +138,7 @@ export const Player = function (env, x, y, secondPlayer = false) {
   // Función subscrita a bombHandler$.
   this.updateStats = () => {
     $(`#lives${this.secondPlayer ? 2 : 1}`).text(this.lives);
+    $(`#bombs${this.secondPlayer ? 2 : 1}`).text(this.bombs);
   };
 
   this.getPosI = (x) => {
