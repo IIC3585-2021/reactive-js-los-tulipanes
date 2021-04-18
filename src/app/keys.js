@@ -1,9 +1,9 @@
 /**************************************************
 ** GAME KEYBOARD CLASS
 **************************************************/
-const Keys = function(up=false, left=false, right=false, down=false, space=false, enter=false, secondInput=false) {
+export const Keys = function (up = false, left = false, right = false, down = false, space = false, enter = false, secondInput = false) {
 
-	const selected = function(e) {
+	const selected = function (e) {
 
 		let c = e.keyCode;
 

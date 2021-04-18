@@ -1,4 +1,12 @@
-let resources = {
+import img_upImg from "../assets/img/player_facing_to_up.png"
+import img_downImg from "../assets/img/player_facing_to_down.png"
+import img_leftImg from "../assets/img/player_facing_to_left.png"
+import img_rightImg from "../assets/img/player_facing_to_right.png"
+import wallImg from "../assets/img/wall.png"
+import floorImg from "../assets/img/floor.png"
+import bombImg from "../assets/img/bomb.png"
+
+export const resources = {
 
     images: {},
 
@@ -9,26 +17,26 @@ let resources = {
             let image = new Image();
 
             image.onload = () => resolve([name, image]);
-            
+
             // Se carga imagen según url
             image.src = url;
         });
-	},
+    },
 
-	loadImages() {
+    loadImages() {
 
         return new Promise((resolve, reject) => {
 
             const files = [
-                this.loadImage('facing_to_up', 'assets/img/player_facing_to_up.png'),
-                this.loadImage('facing_to_down', 'assets/img/player_facing_to_down.png'),
-                this.loadImage('facing_to_left', 'assets/img/player_facing_to_left.png'),
-                this.loadImage('facing_to_right', 'assets/img/player_facing_to_right.png'),
-                this.loadImage('wall', 'assets/img/wall.png'),
-                this.loadImage('floor', 'assets/img/floor.png'),
-                this.loadImage('bomb', 'assets/img/bomb.png'),
+                this.loadImage('facing_to_up', img_upImg),
+                this.loadImage('facing_to_down', img_downImg),
+                this.loadImage('facing_to_left', img_leftImg),
+                this.loadImage('facing_to_right', img_rightImg),
+                this.loadImage('wall', wallImg),
+                this.loadImage('floor', floorImg),
+                this.loadImage('bomb', bombImg),
             ];
-            
+
             // Promesa se resuelve cuando se cargan todas las magenes
             Promise.all(files).then((result) => {
                 resolve(["images", Object.fromEntries(result)]);
@@ -36,7 +44,7 @@ let resources = {
                 reject(error);
             });
         });
-	},
+    },
 
     load() {
 
